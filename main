@@ -1,0 +1,170 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+int main() {
+    int choice;
+    bool hasKey = false;
+    bool isAlive = true;
+    int health = 100;
+    int validInput; // To track if scanf successfully read a number
+
+    while (isAlive) {
+        // Start of the game
+        printf("You wake up in a dark dungeon. There are two doors in front of you.\n");
+        printf("1. Take the left door.\n");
+        printf("2. Take the right door.\n");
+        validInput = scanf("%d", &choice);
+
+        // Check for valid numeric input
+        if (validInput != 1 || choice < 1 || choice > 2) {
+            printf("Please choose a valid option (1 or 2).\n");
+            while (getchar() != '\n'); // Clear input buffer
+            continue; // Restart the loop
+        }
+
+        // First decision point
+        if (choice == 1) {
+            printf("You enter a room with a sleeping dragon. What do you do?\n");
+            printf("1. Try to sneak past.\n");
+            printf("2. Attack the dragon.\n");
+            validInput = scanf("%d", &choice);
+
+            // Check for valid numeric input
+            if (validInput != 1 || choice < 1 || choice > 2) {
+                printf("Please choose a valid option (1 or 2).\n");
+                while (getchar() != '\n'); // Clear input buffer
+                continue; // Restart the loop
+            }
+
+            // Second decision point (left)
+            if (choice == 1) {
+                printf("You try to sneak past. The dragon doesn't wake up.\n");
+                printf("You find a shiny key on a pedestal. You take it.\n");
+                hasKey = true;
+
+                // Third decision point
+                printf("You see a locked door at the back. What do you do?\n");
+                printf("1. Use the key (if you have it).\n");
+                printf("2. Try to break the door.\n");
+                validInput = scanf("%d", &choice);
+
+                // Check for valid numeric input
+                if (validInput != 1 || choice < 1 || choice > 2) {
+                    printf("Please choose a valid option (1 or 2).\n");
+                    while (getchar() != '\n'); // Clear input buffer
+                    continue; // Restart the loop
+                }
+
+                if (choice == 1) {
+                    if (hasKey == true) {
+                        printf("You use the key and open the door! You find a huge treasure.\n");
+                        printf("YOU WON THE GAME!\n");
+                        printf("Press 1 to play again, or any other number to exit.\n");
+                        validInput = scanf("%d", &choice);
+                        if (validInput != 1 || choice != 1) {
+                            isAlive = false; // Exit the game
+                        } else {
+                            hasKey = false; // Reset for new game
+                            health = 100;
+                        }
+                    } else {
+                        printf("You don't have a key. The door won't open.\n");
+                        printf("You are trapped forever. GAME OVER.\n");
+                        printf("Press 1 to play again, or any other number to exit.\n");
+                        validInput = scanf("%d", &choice);
+                        if (validInput != 1 || choice != 1) {
+                            isAlive = false; // Exit the game
+                        } else {
+                            hasKey = false; // Reset for new game
+                            health = 100;
+                        }
+                    }
+                } else if (choice == 2) {
+                    printf("You try to break the door, but it makes a lot of noise.\n");
+                    printf("The dragon wakes up and burns you. You lose 100 health.\n");
+                    health = health - 100;
+                    if (health <= 0) {
+                        printf("You died! GAME OVER.\n");
+                        printf("Press 1 to play again, or any other number to exit.\n");
+                        validInput = scanf("%d", &choice);
+                        if (validInput != 1 || choice != 1) {
+                            isAlive = false; // Exit the game
+                        } else {
+                            hasKey = false; // Reset for new game
+                            health = 100;
+                        }
+                    }
+                }
+            } else if (choice == 2) {
+                printf("You attack the dragon, but it's too strong.\n");
+                printf("The dragon burns you and you lose 100 health.\n");
+                health = health - 100;
+                if (health <= 0) {
+                    printf("You died! GAME OVER.\n");
+                    printf("Press 1 to play again, or any other number to exit.\n");
+                    validInput = scanf("%d", &choice);
+                    if (validInput != 1 || choice != 1) {
+                        isAlive = false; // Exit the game
+                    } else {
+                        hasKey = false; // Reset for new game
+                        health = 100;
+                    }
+                }
+            }
+        } else if (choice == 2) {
+            printf("You enter a room with a locked chest. What do you do?\n");
+            printf("1. Try to open the chest.\n");
+            printf("2. Ignore the chest and move forward.\n");
+            validInput = scanf("%d", &choice);
+
+            // Check for valid numeric input
+            if (validInput != 1 || choice < 1 || choice > 2) {
+                printf("Please choose a valid option (1 or 2).\n");
+                while (getchar() != '\n'); // Clear input buffer
+                continue; // Restart the loop
+            }
+
+            // Second decision point (right)
+            if (choice == 1) {
+                printf("The chest is booby-trapped. A poison trap activates.\n");
+                printf("You lose 50 health.\n");
+                health = health - 50;
+                if (health <= 0) {
+                    printf("The poison kills you! GAME OVER.\n");
+                    printf("Press 1 to play again, or any other number to exit.\n");
+                    validInput = scanf("%d", &choice);
+                    if (validInput != 1 || choice != 1) {
+                        isAlive = false; // Exit the game
+                    } else {
+                        hasKey = false; // Reset for new game
+                        health = 100;
+                    }
+                } else {
+                    printf("You're still alive. You find an exit.\n");
+                    printf("You escape the dungeon! YOU WON THE GAME!\n");
+                    printf("Press 1 to play again, or any other number to exit.\n");
+                    validInput = scanf("%d", &choice);
+                    if (validInput != 1 || choice != 1) {
+                        isAlive = false; // Exit the game
+                    } else {
+                        hasKey = false; // Reset for new game
+                        health = 100;
+                    }
+                }
+            } else if (choice == 2) {
+                printf("You ignore the chest and find an exit.\n");
+                printf("You escape the dungeon! YOU WON THE GAME!\n");
+                printf("Press 1 to play again, or any other number to exit.\n");
+                validInput = scanf("%d", &choice);
+                if (validInput != 1 || choice != 1) {
+                    isAlive = false; // Exit the game
+                } else {
+                    hasKey = false; // Reset for new game
+                    health = 100;
+                }
+            }
+        }
+    }
+
+    return 0;
+}
